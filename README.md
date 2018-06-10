@@ -26,9 +26,11 @@ The other major challenge was the multi-plexing and update of the matrix of 32x1
 
 The Arduino listens continually for the 433MHz signals on Pin11 and decodes the Manchester Protocol.  The protocol for this sensor differs from the OS WMR86 Weather Station that the polarity is reversed and the bit-rate is about half the WMR86 V3.0 frequency.  Fortunately the Oregon Scientific data packet structure is identical to the WMR86.  This initially caused considerable confusion as it was thought the THGR122NX would have the same V3 protocol as the WMR86, but with no results forthcoming, it was obvious something was different.  Changing the polarity of the Manchester decoding was tried first but no avail, and then the bit rate was adjusted and, and messages began to appear.  A little bit of fine tuning around the bit rate and processing the packets gave a steady stream of Temperature and Humidity readings. It would be great to be able elaborate on a difficult and clever analysis that revealed this required adjustment, but it was just another guess (pretty good after the initial one to get the sensor right), and only took a couple of tries and it was working!
 
-Some variation was discovered between the two Temp/Hum sensors tested when displaying the Humidity, and up to 6-9% difference was observed. Just remember the Humidity sensors in these systems are not extremely accurate and may need some sort of conversion factor applied to correct for a particular sensor.
-
 All the sensors discussed above have a switch in the battery compartment that allocates a station number of 1,2 or 3.  So it would be quite easy to identify up to three sensors in the program.  This has been tested, but is commented out in its present state. A mixture of the sensors could be used if desired.  
+
+### Accuracy???
+
+Some variation was discovered between the two Temp/Hum sensors tested when displaying the Humidity, and up to 6-9% difference was observed. Just remember the Humidity sensors in these systems are not extremely accurate and may need some sort of conversion factor applied to correct for a particular sensor.
 
 ### Sensor Manufacturer
 
@@ -43,3 +45,4 @@ For a detailed explanation of the Manchester Protocol and structure of OS data p
 
 Adafruit Medium 16x32 RGB LED matrix panel (and Arduino interface shield)
 PRODUCT ID: 420
+https://www.adafruit.com/product/420 (as of June 2018)
