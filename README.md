@@ -6,7 +6,11 @@ Matrix Display and Weather Sensors
 ### Adafruit Medium 16x32 RGB LED matrix panel
 
 This project allows the 433MHz signals from an Oregon Scientific Temperature and Humidity Sensor (THGR122NX) to be intercepted, decoded and displayed on an Adafruit Medium 16x32 RGB LED matrix panel
-(PRODUCT ID: 420) using an Arduino Uno. The matrix display sold by Adafruit comes with the cables and adapter shield to connect the Matrix Display board up with minimum effort (ie no Soldering!). The other real bonuis of this shield was the provision of a battery backed up real time clock.
+(PRODUCT ID: 420) using an Arduino Uno. The matrix display sold by Adafruit comes with the cables and adapter shield to connect the Matrix Display board up with minimum effort (ie no Soldering!). The other real bonuis of this shield was the provision of a battery backed up real time clock. 
+
+### NB 
+
+When running this program the Clock Setting lines can be enable to set the clock. One way allows the clock to be set conveniently automagically from your main PC via the Arduino IDE (see comments).  However immediately this version has been run, the line should be deactivated, and the same program run again. Explanation: The line that sets the clock will stay active in the downloaded program and will try to reset the clock every time it is run back to the first time the IDE compiled and downloaded it.  It only needs to be done once!!!  You may need to remove the battery and replace it to make the new time setting work.
 
 A separate shield was added to connect the 433Mhz receiver, but if a smaller 433MHz Rx was used there is a prototyping area on the Matrix interface that accomodate the receiver as well, saving adding the extra shield. It is highly recommended to use a Super Superheterodyne Receiver to get better noise rejection and sensitivity.
 
