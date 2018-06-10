@@ -1,5 +1,5 @@
-Weather Sensors
-===============
+Matrix Display and Weather Sensors
+==================================
 
 ### Arduino Uno, 433MhzRx and Oregon Scientific
 ### Temperature and Humidity Sensor THGR122NX
