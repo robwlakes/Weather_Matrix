@@ -56,7 +56,7 @@ byte    oregon[]   = {
 //Weather Variables
 double  temperature   = 2.2;
 int     humidity      = 1;
-int     humidCorrect  = 0; //correction factor for Hunidity Sensor
+int     humidCorrect  = 6; //correction factor for Hunidity Sensor
 //House keeping/debug
 int seconds = 0;
 int readings = 0;       //just to track readings
@@ -74,29 +74,26 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   //433MHz RX input
   pinMode(RxPin, INPUT);
-  //Matrix setup
-  matrix.begin();
-  matrix.setTextSize(1);    // size 1 == 8 pixels high
   //Realtime clock setup
   if (! rtc.begin()) {
     Serial.println("Couldn't find RTC");
     while (1);
   }
-
   if (! rtc.isrunning()) {
     Serial.println("RTC is NOT running!");
-    // following line sets the RTC to the date & time this sketch was compiled
-    //NB These lines must be commented out immediately after use
-    //Or the clock will reset to what was at compile every time it is run in the CPU.
-    //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    // This line sets the RTC with an explicit date & time, for example to set
-    // January 21, 2014 at 3am you would call:
-    // rtc.adjust(DateTime(2014, 1, 21,  3,  0, 0));  //eg
-    //                     year, M,  D,  H,  M, S
-    //rtc.adjust(DateTime(2018, 6,  5,  11, 59, 0));
-    //AND disable those lines if it is set already and just the program is being updated.
-    //Then remove and replace the battery ASAP and the new time will take over.
-  }
+    }
+  // Following line sets the RTC to the date & time this sketch was compiled
+  // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  // This line sets the RTC with an explicit date & time, for example to set
+  // January 21, 2014 at 3am you would call:
+  // rtc.adjust(DateTime(2014, 1, 21,  3,  0, 0));  //eg
+  //                     year, M,  D,  H,  M, S
+  // rtc.adjust(DateTime(2018, 5,  9, 11, 58, 0));
+  // THEN comment out the "setting lines" and reprogram, otherwise the "Time of Compilation"
+  // Will always be loaded. Not good!!!
+  //Matrix setup
+  matrix.begin();
+  matrix.setTextSize(1);    // size 1 == 8 pixels high
   clock2matrix();
 }
 
@@ -250,6 +247,7 @@ void hexBinDump() {
 // so recieved "A3" becomes "3A"
 // CS = the sum of nybbles, 1 to (CSpos-1), then compared to CSpos nybble (LSNybble) and CSpos+1 nybble (MSNybble);
 // This sums the nybbles in the packet and creates a 1 byte number, and this is compared to the two nybbles beginning at CSpos
+// Note that Temp 9 bytes and anemometer 10 bytes, but rainfall uses 11 bytes per packet. (NB Rainfall CS spans a byte boundary)
 bool ValidCS(int CSPos) {
   boolean ok = false;
   byte cs = 0;
@@ -288,6 +286,7 @@ void analyseData() {
     //Serial.print(readings, DEC);
     //Serial.print("=");
     thermom();//do the actual calculations
+    //NB This checks the sensor settings are on "2"
     if ((manchester[2] & 2)) {
       stateDisp = true;
       //weather2matrix();// Matrix display of readings
@@ -376,14 +375,13 @@ void clock2matrix() {
   DateTime now = rtc.now(); //read clock
   if (now.second() < 29) {
     //Now check for happy hour
-    int myhour = now.hour()%12; //modulo 12 counting of the hours 0-11
+    int myhour = now.hour();
     int mydayOfWeek = now.dayOfTheWeek();
-    //This was considered for our local tavern but held back
     //Serial.print(myhour);
     //Serial.print(":");
     //Serial.println(mydayOfWeek);
     //check for happy hour, Friday=5, hour=18 (ie 6-7pm)
-    if ((myhour == 6) && (mydayOfWeek == 5)) {
+    if ((myhour == 18) && (mydayOfWeek == 5)) {
       //happyhour = true;
       //Serial.print("Happy hour True");
     }
@@ -394,8 +392,8 @@ void clock2matrix() {
     matrix.fillScreen(0);
     matrix.setTextColor(matrix.Color333(0, 1, 0));
     //wrap the time around 12 hour format
-    if (myhour ==0) {
-      myhour = 12; // so no '0' hours
+    if (myhour > 12) {
+      myhour = myhour - 11; //if time is 13:00hrs make it 1:00 pm
     }
     //format for single and double digit hours
     if (myhour < 10) {
