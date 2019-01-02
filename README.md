@@ -46,7 +46,7 @@ These robust and well designed units from Oregon Scientific are highly recommend
 
 For a detailed explanation of the Manchester Protocol and structure of OS data packets please read https://github.com/robwlakes/ArduinoWeatherOS 
 
-NB Somehoe I uploaded a file to GITHub that was trying some new features and it contained serious bugs.
+NB Somehow I uploaded a file to GITHub that was trying some new features and it contained serious bugs.
 The version 6 now present as of 2/01/2019 is good to go! 
 
 
