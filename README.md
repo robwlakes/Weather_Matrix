@@ -6,15 +6,15 @@ Matrix Display and Weather Sensors
 ### Adafruit Medium 16x32 RGB LED matrix panel
 
 This project allows the 433MHz signals from an Oregon Scientific Temperature and Humidity Sensor (THGR122NX) to be intercepted, decoded and displayed on an Adafruit Medium 16x32 RGB LED matrix panel
-(PRODUCT ID: 420) using an Arduino Uno. The matrix display sold by Adafruit comes with the cables and adapter shield to connect the Matrix Display board up with minimum effort (ie no Soldering!). The other real bonuis of this shield was the provision of a battery backed up real time clock. 
+(PRODUCT ID: 420) using an Arduino Uno. The matrix display sold by Adafruit comes with the cables and adapter shield to connect the Matrix Display board up with minimum effort (ie no Soldering!). The other real bonuis of this shield is the provision of a battery backed up real time clock. 
 
 ### NB 
 
-When running this program the Clock Setting lines can be enable to set the clock. One way allows the clock to be set conveniently automagically from your main PC via the Arduino IDE (see comments).  However immediately this version has been run, the line should be deactivated, and the same program run again. Explanation: The line that sets the clock will stay active in the downloaded program and will try to reset the clock every time it is run back to the first time the IDE compiled and downloaded it.  It only needs to be done once!!!  You may need to remove the battery and replace it to make the new time setting work.
+When running this program the Clock Setting lines can be enable to set the clock. One way allows the clock to be set conveniently automagically from your main PC via the Arduino IDE (see comments).  However immediately this version has been run, the line should be deactivated, and the same program run again. Explanation: The line that sets the clock will stay active in the uploaded compiled program "hardwired" into the program and will try to reset the clock every time it is run back to the first time the IDE compiled and uploaded it.  It only needs to be done once!!!  The clock should reflect the set time as the display refreshes.
 
-A separate shield was added to connect the 433Mhz receiver, but if a smaller 433MHz Rx was used there is a prototyping area on the Matrix interface that accomodate the receiver as well, saving adding the extra shield. It is highly recommended to use a Super Superheterodyne Receiver to get better noise rejection and sensitivity.
+A separate shield was added to connect the 433Mhz receiver, but if a smaller 433MHz Rx was used there is a prototyping area on the Matrix interface that accomodate the receiver as well, saving adding the extra shield. It is highly recommended to use a Super Superheterodyne Receiver to get better noise rejection and sensitivity. Look around the internet as there are shorter 433MHz boards than what I used here, that will fit on the prototyping space provided (I found mine too late!)
 
-The design was to show the external Temperature and Humidty for 10 seconds and then to show the Time and Date for 10 seconds, and just keep alternating at this rate.  the whole thing has been placed in the bar of our local Tavern as a talking point for our locals and tourists alike. The project does not have any manual time setting options and drift with the real time clock will become a gradual problem.  A more accurate and stable RTC could have been chosen, but the one provided on the board will have to do for the moment.  Obviously an internet or GPS derived clock would have been a better long term solution, but not one we were prepared to go to at this stage.
+The design was to show the external Temperature and Humidty for 10 seconds and then to show the Time and Date for 10 seconds, and just keep alternating at this rate.  The whole thing has been placed in the bar of our local Tavern as a talking point for our locals and tourists alike. The project does not have any manual time setting options and drift with the real time clock is a continual problem (about 2mins every 3 months for mine).  A more accurate and stable RTC could have been chosen, but the one provided on the board will have to do for the moment.  Obviously an internet or GPS derived clock would have been a better long term solution, but not one we were prepared to go to at this stage.
 
 ### The hardware
 
@@ -24,7 +24,7 @@ The design was to show the external Temperature and Humidty for 10 seconds and t
 
 ### Matrix Display Challenge
 
-The other major challenge was the multi-plexing and update of the matrix of 32x16 LEDs was done by interrupt on the Arduino Uno.  This could have complicated the use of the Oregon Scientific 433MHz reception. However as the technique used here for receiving the OS signals is based on delays, rather than interrupts, and the program sole purpose was to listen for 433MHz bursts meant all that was needed for the reception algorithm to have the delays adjusted for the time added by the display interrupts and it works just fine. Stable displays and no flickering at all.
+The other major challenge was the multi-plexing and update of the matrix of 32x16 LEDs is done by interrupt on the Arduino Uno.  This could have complicated the use of the Oregon Scientific 433MHz reception. However as the technique used here for receiving the OS signals is based on delays, rather than interrupts, and the program sole purpose was to listen for 433MHz bursts meant all that was needed for the reception algorithm to have the 433MHz timing delays adjusted for the time added by the display interrupts and it works just fine. Stable displays and no flickering at all.
 
 ### Wireless Reception
 
